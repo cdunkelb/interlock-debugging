@@ -1,5 +1,7 @@
 import json
 
+# Docker command to get the output needed
+# docker network inspect $(docker network ls -f driver=overlay -q) > /tmp/network-inspect.json
 
 def main():
     with open("network-inspect.json") as f:
