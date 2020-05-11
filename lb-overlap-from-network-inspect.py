@@ -5,12 +5,15 @@ import sys
 
 def main():
     network_file="network-inspect.json"
-    if len(sys.argv) >= 1:
+    if len(sys.argv) >= 2:
         network_file=sys.argv[1]
     with open(network_file) as f:
         networks = json.load(f)
         ips = container_ips(networks)
         dupes = list_duplicates(ips)
+
+        print("Found {} ips".format(len(ips)))
+        print("Found {} blank ips".format(len([x for x in ips if x == ''])))
         print(dupes)
 
 
