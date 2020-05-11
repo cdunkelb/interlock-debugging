@@ -1,7 +1,7 @@
 import json
 import sys
 # This script processes output from the following docker commands
-# docker network inspect $(docker network ls -f driver=overlay -q) > /tmp/network-inspect.json
+# docker network inspect -v $(docker network ls -f driver=overlay -q) > /tmp/network-inspect.json
 
 def main():
     network_file="network-inspect.json"
