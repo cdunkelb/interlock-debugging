@@ -1,10 +1,13 @@
 import json
-
-# Docker command to get the output needed
+import sys
+# This script processes output from the following docker commands
 # docker network inspect $(docker network ls -f driver=overlay -q) > /tmp/network-inspect.json
 
 def main():
-    with open("network-inspect.json") as f:
+    network_file="network-inspect.json"
+    if len(sys.argv) >= 1:
+        network_file=sys.argv[1]
+    with open(network_file) as f:
         networks = json.load(f)
         ips = container_ips(networks)
         dupes = list_duplicates(ips)
@@ -14,6 +17,8 @@ def main():
 def container_ips(networks):
     ips = []
     for network in networks:
+        if not network['Containers']:
+            continue
         for container in network['Containers']:
             ips.append(network['Containers'][container]['IPv4Address'])
     return ips
